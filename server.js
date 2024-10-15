@@ -1,6 +1,6 @@
-require('dotenv/config')
-const mysql = require('mysql2/promise');
-const app = require('./app');
+import 'dotenv/config';
+import mysql from 'mysql2/promise';
+import app from './app.js'
 
 // Create a connection pool
 const pool = mysql.createPool({
@@ -36,7 +36,7 @@ pool.getConnection()
 app.set('pool', pool);
 
 // Start the server
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });

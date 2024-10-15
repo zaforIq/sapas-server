@@ -1,7 +1,10 @@
-const express = require('express');
+import express from 'express';
+import middlewares from './middlewares/index.js';
+import routes from './middlewares/routes.js';
+
 const app = express();
 
+middlewares(app);
+routes(app);
 
-
-
-module.exports=app;
+export default app;
