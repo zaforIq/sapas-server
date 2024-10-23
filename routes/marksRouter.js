@@ -1,7 +1,7 @@
 import express from 'express'
-import authorizedStudent from '../middlewares/Authorized'
-import {} from '../controllers/marksController'
 const router=express.Router()
+import authorizedStudent from '../middlewares/Authorized.js'
+import {createMark,getMarks,getMarkById,updateMarkById,deleteMarkById} from '../controllers/marksController.js'
 
 
 router.route('/')
