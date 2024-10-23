@@ -2,11 +2,21 @@ import express from 'express'
 const router=express.Router()
 
 import authorizedStudent from '../middlewares/Authorized.js'
-import { getAssesmentDetails } from '../controllers/assesmentController.js'
+import {createAssesment,getAssesmentById,getAssesments,updateAssesmentById,deleteAssesmentById} from '../controllers/assesmentController.js'
 
 
 router.route('/')
-.get(authorizedStudent,getAssesmentDetails)
+.post(authorizedStudent,createAssesment)
+.get(authorizedStudent,getAssesments)
+
+
+
+router.route('/:id')
+.get(authorizedStudent,getAssesmentById)
+.put(authorizedStudent,updateAssesmentById)
+.delete(authorizedStudent,deleteAssesmentById)
+
+
 
 
 

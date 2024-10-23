@@ -1,11 +1,10 @@
 import studentRouter from '../routes/studentRouter.js'
-import subjectRouter from '../routes/subjectRouter.js'
-import assesmentRouter from '../routes/assesmentRouter.js'
+import courseRouter from '../routes/coursesRoute.js'
 
 
 export default (app)=>{
     app.use('/api/student',studentRouter)
-    app.use('/api/subject',subjectRouter)
-    app.use('/api/assesment',assesmentRouter)
+    app.use('/api/course',courseRouter)
+   
 
 }

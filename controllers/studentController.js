@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import _ from 'lodash';
 
 export const signUp = async (req, res) => {
     const { studentId, name, department, email, password } = req.body;
@@ -7,9 +8,10 @@ export const signUp = async (req, res) => {
     const conn = await pool.getConnection();
 
     try {
+
         // Hash the password before storing it in the database
         const passwordHash = await bcrypt.hash(password, 10);
-        await conn.query('INSERT INTO students(studentId, name, department, email, password_hash) VALUES(?,?,?,?,?)', [studentId, name, department, email, passwordHash]);
+        await conn.query('INSERT INTO students(studentId, name, department, email, password) VALUES(?,?,?,?,?)', [studentId, name, department, email, passwordHash]);
         const token = jwt.sign({ studentId: studentId, name:name, department:department, email: email }, process.env.JWT_SECRET, { expiresIn : '1h' });
         res.status(201).json({ 
             token,
@@ -32,7 +34,7 @@ export const logIn = async (req, res) => {
             return res.status(400).json({ message: 'Invalid email or password' });
         }
         const student = rows[0];
-        const passwordMatch = await bcrypt.compare(password, student.password_hash);
+        const passwordMatch = await bcrypt.compare(password, student.password);
         if (!passwordMatch) {
             return res.status(400).json({ message: 'Invalid email or password' });
         }
