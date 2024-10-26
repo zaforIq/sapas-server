@@ -9,10 +9,10 @@ export const signUp = async (req, res) => {
 
     try {
 
-        // Hash the password before storing it in the database
+     
         const passwordHash = await bcrypt.hash(password, 10);
         await conn.query('INSERT INTO students(studentId, name, department, email, password) VALUES(?,?,?,?,?)', [studentId, name, department, email, passwordHash]);
-        const token = jwt.sign({ studentId: studentId, name:name, department:department, email: email }, process.env.JWT_SECRET, { expiresIn : '1h' });
+        const token = jwt.sign({ studentId: studentId, name:name, department:department, email: email }, process.env.JWT_SECRET, { expiresIn : '10h' });
         res.status(201).json({ 
             token,
             message: 'Sign up successful' 
@@ -38,7 +38,7 @@ export const logIn = async (req, res) => {
         if (!passwordMatch) {
             return res.status(400).json({ message: 'Invalid email or password' });
         }
-        //token will store studentid,name,department,email
+        
         const token = jwt.sign({ studentId: student.studentId, name: student.name, department: student.department, email: student.email }, process.env.JWT_SECRET, { expiresIn : '1h' });
         res.status(200).json({ 
             token,
@@ -53,7 +53,7 @@ export const logIn = async (req, res) => {
     // Implementation for login
 };
 
-//write the code for the getStudentDetails function by using the studentId from the token
+
 export const getStudentDetails = async (req, res) => {
     const studentId = req.student.studentId;
     const pool = req.app.get('pool');

@@ -32,8 +32,6 @@ export const getCourses = async (req, res) => {
 
 }
 export const getCourseById = async (req, res) => {
-    console.log(req.student)
-    console.log(req.params)
     const studentId = req.student.studentId;
     const courseId = req.params.id;
     const pool = req.app.get('pool');

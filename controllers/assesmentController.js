@@ -1,14 +1,17 @@
 
 
 export const createAssesment = async (req, res) => {
-    const courseId = req.headers.courseid // Use req.headers to access the headers
-    const pool = req.app.get('pool');
+    const courseId = req.headers.courseid 
     const conn = await pool.getConnection();
     
     try {
         const { assesmentName, highestMark } = req.body;
+        const assesment=await conn.query('SELECT * FROM assesments WHERE assesmentName = ? AND courseId = ?', [assesmentName, courseId]);
+        if (assesment[0].length > 0) {
+            return res.status(400).json({ message: 'Assesment already exists' });
+        }
         await conn.query('INSERT INTO assesments (assesmentName, highestMark, courseId) VALUES (?, ?, ?)', [assesmentName, highestMark, courseId]);
-        res.status(201).json({ message: 'Assesment added successfully' });
+        res.status(201).json({ message: 'Assesment created successfully' });
     } catch (err) {
         res.status(500).json({ message: err.message });
     } finally {
@@ -17,7 +20,7 @@ export const createAssesment = async (req, res) => {
 };
 
 export const getAssesments = async (req, res) => {
-    const courseId = req.headers['courseid']; // Use req.headers to access the headers
+    const courseId = req.headers['courseid']; 
     const pool = req.app.get('pool');
     const conn = await pool.getConnection();
     try {
