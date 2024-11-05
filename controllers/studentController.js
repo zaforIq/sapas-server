@@ -4,6 +4,7 @@ import _ from 'lodash';
 
 export const signUp = async (req, res) => {
     const { studentId, name, department, email, password } = req.body;
+    console.log(req.body);
     const pool = req.app.get('pool');
     const conn = await pool.getConnection();
 
@@ -14,6 +15,7 @@ export const signUp = async (req, res) => {
         await conn.query('INSERT INTO students(studentId, name, department, email, password) VALUES(?,?,?,?,?)', [studentId, name, department, email, passwordHash]);
         const token = jwt.sign({ studentId: studentId, name:name, department:department, email: email }, process.env.JWT_SECRET, { expiresIn : '10h' });
         res.status(201).json({ 
+            student: { studentId, name, department, email },
             token,
             message: 'Sign up successful' 
         });
@@ -26,6 +28,7 @@ export const signUp = async (req, res) => {
 
 export const logIn = async (req, res) => {
     const { email, password } = req.body;
+    
     const pool = req.app.get('pool');
     const conn = await pool.getConnection();
     try {
@@ -41,6 +44,7 @@ export const logIn = async (req, res) => {
         
         const token = jwt.sign({ studentId: student.studentId, name: student.name, department: student.department, email: student.email }, process.env.JWT_SECRET, { expiresIn : '1h' });
         res.status(200).json({ 
+            student: _.omit(student, 'password'),
             token,
             message: 'Login successful' 
         });
