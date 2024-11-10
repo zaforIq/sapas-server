@@ -1,8 +1,8 @@
 
 
 export const createMark = async (req, res) => {
-    const courseId =req.headers.courseId;
-    const assesmentId = req.headers.assesmentId;
+
+    const assesmentId = req.body.assesmentId;
     const markObtained =req.body.markObtained;
 
     
@@ -11,7 +11,7 @@ export const createMark = async (req, res) => {
 
     try {
        
-        const [result] = await conn.query('INSERT INTO marks (courseId, assesmentId, markObtained) VALUES (?, ?, ?)', [courseId, assesmentId, markObtained]);
+        const [result] = await conn.query('INSERT INTO marks (assesmentId, markObtained) VALUES (?, ?)', [assesmentId, markObtained]);
         res.status(201).json({ message: 'Mark created successfully' });
 }
     catch (err) {
