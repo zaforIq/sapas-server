@@ -22,17 +22,20 @@ export const createMark = async (req, res) => {
 }
 
 
-export const getMarkByAssesmentId = async (req, res) => {
-    const assesmentId = req.headers.assesmentId;
+export const updateMark = async (req, res) => {
+
+  console.log(req.body)
+    const assesmentId = req.params.id;
+    const markObtained = req.body.markObtained;
     const pool = req.app.get('pool');
     const conn = await pool.getConnection();
+
     try {
-        const [rows] = await conn.query('SELECT * FROM marks WHERE assesmentId = ?', [assesmentId]);
-        res.status(200).json(rows);
+        const [result] = await conn.query('UPDATE marks SET markObtained = ? WHERE assesmentId = ?', [markObtained, assesmentId]);
+        res.status(200).json({ message: 'Mark updated successfully' });
     } catch (err) {
         res.status(500).json({ message: err.message });
     } finally {
         conn.release();
     }
 }
-
