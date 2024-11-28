@@ -39,7 +39,7 @@ export const getCourseById = async (req, res) => {
     try {
         const [rows] = await conn.query('SELECT * FROM courses WHERE studentId = ? AND courseId = ?', [studentId, courseId]);
         if (rows.length === 0) {
-            return res.status(404).json({ message: 'Course not found' });
+            return res.status(404).json({ message: 'Course are not found' });
         }
         res.status(200).json(rows[0]);
     } catch (err) {
