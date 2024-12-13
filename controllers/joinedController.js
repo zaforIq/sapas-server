@@ -348,3 +348,7 @@ export const getCoursesWithMarksAndTarget = async (req, res) => {
         conn.release();
     }
 };
+
+
+
+

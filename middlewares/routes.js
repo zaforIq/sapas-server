@@ -3,6 +3,7 @@ import courseRouter from '../routes/coursesRoute.js'
 import assesmentRouter from '../routes/assesmentRouter.js'
 import marksRouter from '../routes/marksRouter.js'
 import joinedRouter from '../routes/joinedRouter.js'
+import communityRoute from '../routes/communityRoute.js'
 
 
 export default (app)=>{
@@ -11,5 +12,6 @@ export default (app)=>{
     app.use('/api/assesment',assesmentRouter)
     app.use('/api/mark',marksRouter)
     app.use('/api/joined',joinedRouter)
+    app.use('/api/community',communityRoute)
 
 }

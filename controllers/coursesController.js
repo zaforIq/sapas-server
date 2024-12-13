@@ -117,3 +117,17 @@ export const deleteCourseById = async (req, res) => {
     }
 };
 
+
+export const showView = async (req, res) => {
+    const pool = req.app.get('pool');
+    const conn = await pool.getConnection();
+    try {
+        const [rows] = await conn.query('SELECT * FROM courses');
+        res.status(200).json(rows);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    } finally {
+        conn.release();
+    }
+}
+
