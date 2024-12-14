@@ -32,14 +32,7 @@ export const getSingleNote = async (req, res) => {
 };
 
 export const createNote = async (req, res) => {
-    noteUpload(req, res, async (err) => {
-        if (err) {
-            return res.status(500).json({ message: err.message });
-        }
 
-        if (!req.file) {
-            return res.status(400).json({ message: 'No file uploaded' });
-        }
 
         const pool = req.app.get('pool');
         const conn = await pool.getConnection();
@@ -54,7 +47,6 @@ export const createNote = async (req, res) => {
         } finally {
             conn.release();
         }
-    });
 };
 
 export const getQuestions = async (req, res) => {
@@ -83,14 +75,7 @@ export const getSingleQuestion = async (req, res) => {
 };
 
 export const createQuestion = async (req, res) => {
-    questionUpload(req, res, async (err) => {
-        if (err) {
-            return res.status(500).json({ message: err.message });
-        }
 
-        if (!req.file) {
-            return res.status(400).json({ message: 'No file uploaded' });
-        }
 
         const pool = req.app.get('pool');
         const conn = await pool.getConnection();
@@ -105,7 +90,6 @@ export const createQuestion = async (req, res) => {
         } finally {
             conn.release();
         }
-    });
 };
 
 export const triggerFunction = async (req, res) => {
